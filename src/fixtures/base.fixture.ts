@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test';
 import dotenv from 'dotenv';
-import { productName } from '.../utils/testData';
+import { productName } from '../utils/testData';
 
 
 dotenv.config();
