@@ -23,4 +23,4 @@ export class ProductPage {
     async addProductToCart() {
         await this.addToCartButton.click();
     }
-}
+} 
