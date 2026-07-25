@@ -1,6 +1,8 @@
 import { Page } from '@playwright/test';
 import { Locator } from '@playwright/test';
+import { productName } from '../utils/testData';
 
+const baseUrl = process.env.BASE_URL || 'https://www.demoblaze.com'; 
 export class HomePage {
     private readonly phoneCategory: Locator;
     private readonly laptopCategory: Locator;
@@ -22,21 +24,34 @@ export class HomePage {
         this.monitorProduct = page.locator('text=ASUS Full HD');
     } 
 
+    async navigateToHomePage() {
+        await this.page.goto(baseUrl);
+    }
+
     async navigateToPhoneCategory() {
         await this.phoneCategory.click();
+    }
+
+    async navigateToPhoneProduct(){
         await this.phoneProduct.click();
     }
 
     async navigateToLaptopCategory() {
         await this.laptopCategory.click();
-        await this.laptopProduct.click();
     }   
 
-    async navigateToMonitorCategory() {
-        await this.monitorCategory.click();
-        await this.monitorProduct.click();
+    async navigateToLaptopProduct(){
+        await this.laptopProduct.click();
     }
     
+    async navigateToMonitorCategory() {
+        await this.monitorCategory.click();
+    }
+    
+        async navigateToMonitorProduct(){
+        await this.monitorProduct.click();
+    }
+
     async navigateToNextPage() {
         await this.nextButton.click();
     }   
@@ -44,4 +59,6 @@ export class HomePage {
     async navigateToPreviousPage() {
         await this.previousButton.click();
     }
+
 }
+
