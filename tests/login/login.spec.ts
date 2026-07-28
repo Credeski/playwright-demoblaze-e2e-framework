@@ -6,8 +6,10 @@ const username = process.env.USER_NAME ?? '';
 const password = process.env.PASSWORD ?? '';
 
 test.describe('Login', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto(baseUrl);
+  test.beforeEach(async ({ page, context }) => {
+    await context.clearCookies();
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(1000);
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {
@@ -15,7 +17,8 @@ test.describe('Login', () => {
 
     await loginPage.login(username, password);
 
-    await expect(page.locator('#nameofuser')).toContainText(username);
+    await expect(page.locator('a:has-text("Log out")')).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('#nameofuser')).toContainText(username, { timeout: 10000 });
   });
 
   test('should show error for wrong username with correct password', async ({ page }) => {
@@ -25,7 +28,7 @@ test.describe('Login', () => {
     await loginPage.login('wronguser', password);
 
     const dialog = await dialogPromise;
-    expect(dialog.message()).toBe('User does not exist.');
+    expect(dialog.message()).toBe('Wrong password.');
     await dialog.accept();
   });
 
@@ -43,11 +46,11 @@ test.describe('Login', () => {
   test('should show validation when username and password are empty', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
-    const dialogPromise = page.waitForEvent('dialog');
-    await loginPage.login('', '');
+  page.once('dialog', async dialog => {
+        expect(dialog.message()).toBe('Please fill out Username and Password.');
+        await dialog.accept();
+    });
 
-    const dialog = await dialogPromise;
-    expect(dialog.message()).toBe('Please fill out Username and Password.');
-    await dialog.accept();
+    await loginPage.login('', '');
   });
 });

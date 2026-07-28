@@ -17,8 +17,11 @@ export class LoginPage {
 
     async login(username: string, password: string) {
         await this.loginNav.click();
+        await this.page.waitForSelector('#loginusername', { state: 'visible' });
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
-        await this.loginButton.click({ force: true });
+        await this.loginButton.waitFor({ state: 'visible' });
+        await this.page.waitForTimeout(500);
+        await this.loginButton.click();
     }
 }

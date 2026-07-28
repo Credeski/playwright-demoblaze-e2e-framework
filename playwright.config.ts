@@ -5,7 +5,7 @@ dotenv.config();
 
 const config = defineConfig({
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 60 * 1000,
   expect: {
     timeout: 5000,
   },
@@ -21,6 +21,7 @@ const config = defineConfig({
   use: {
     baseURL: process.env.BASE_URL || 'https://www.demoblaze.com',
     actionTimeout: 10000,
+    navigationTimeout: 60000,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

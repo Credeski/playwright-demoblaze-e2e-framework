@@ -25,7 +25,7 @@ export class HomePage {
     } 
 
     async navigateToHomePage() {
-        await this.page.goto(baseUrl);
+        await this.page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
     }
 
     async navigateToPhoneCategory() {
