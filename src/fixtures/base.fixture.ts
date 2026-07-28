@@ -14,7 +14,13 @@ export const test = base.extend<Fixtures>({
     productInCart: async ({ page }, use) => {
         await page.goto(home);
         await page.click(`text=${productName}`); 
+
+        const dialogPromise = page.waitForEvent('dialog');
         await page.click('text=Add to cart');
+
+        const dialog = await dialogPromise;
+                await dialog.accept();
+        
         await use();
     }
 });
