@@ -19,9 +19,9 @@ export class HomePage {
         this.monitorCategory = page.locator('a[onclick="byCat(\'monitor\')"]');
         this.previousButton = page.locator('#prev2');
         this.nextButton = page.locator('#next2');
-        this.phoneProduct = page.locator('text=Nexus 6');
-        this.laptopProduct = page.locator('text=MacBook air');
-        this.monitorProduct = page.locator('text=ASUS Full HD');
+        this.phoneProduct = page.locator('a.hrefch', { hasText: 'Nexus 6' });
+        this.laptopProduct = page.locator('a.hrefch', { hasText: 'MacBook air' });
+        this.monitorProduct = page.locator('a.hrefch', { hasText: 'ASUS Full HD' });
     } 
 
     async navigateToHomePage() {
