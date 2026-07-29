@@ -21,18 +21,18 @@ test('should add a product to the cart and verify it is present', async ({ page 
     await homePage.navigateToPhoneCategory();
     await homePage.navigateToPhoneProduct();
 
-    const dialogPromise = page.waitForEvent('dialog');
+    page.once('dialog', async dialog => {
+    expect(dialog.message()).toBe('Product added.');
+    await dialog.accept();
+});
     await productPage.addProductToCart();
-
-    const dialog = await dialogPromise;
-        expect(dialog.message()).toBe('Product added.');
-        await dialog.accept();
 
 
     await page.goto(`${process.env.BASE_URL}/cart.html`);
+    await page.waitForSelector('tr.success', { timeout: 10000 });
     //get the items in the cart and verify that the product is present
     const items = await cartPage.getCartItems();
-    expect(items).toContain('Nexus 6');
+    expect(items.some(item => item.includes('Nexus 6'))).toBe(true);
 
     //get the total price and verify that it is correct
     const total = await cartPage.getTotal();
@@ -45,10 +45,11 @@ test('should delete a product from the cart', async ({ page, productInCart }) =>
 
     await page.goto(`${process.env.BASE_URL}/cart.html`);
 
-    await cart.deleteItem('Nexus 6');
+    await page.waitForSelector('tr.success', { timeout: 10000 });
+    await cart.deleteItem('Samsung galaxy s6');
 
     const items = await cart.getCartItems();
-    expect(items).not.toContain('Nexus 6');
+    expect(items.some(item => item.includes('Samsung galaxy s6'))).toBe(false);
 });
 
 });

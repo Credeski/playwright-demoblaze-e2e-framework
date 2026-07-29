@@ -13,7 +13,7 @@ type Fixtures = {
 export const test = base.extend<Fixtures>({
     productInCart: async ({ page }, use) => {
         await page.goto(home);
-        await page.click(`text=${productName}`); 
+        await page.locator('a.hrefch', { hasText: productName }).click();
 
         const dialogPromise = page.waitForEvent('dialog');
         await page.click('text=Add to cart');
