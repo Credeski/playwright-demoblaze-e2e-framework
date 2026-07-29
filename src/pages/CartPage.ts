@@ -11,7 +11,7 @@ export class CartPage {
         this.cartItems = page.locator('tr.success');
         this.priceLocator = page.locator('#totalp');
         this.deleteButton = page.locator('text=Delete');
-        this.placeOrderButton = page.locator('text=Place Order');
+        this.placeOrderButton = page.locator('button.btn-success[data-target="#orderModal"]');
     }
 
     async getCartItems() {

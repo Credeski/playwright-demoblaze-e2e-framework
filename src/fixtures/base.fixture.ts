@@ -12,15 +12,10 @@ type Fixtures = {
 
 export const test = base.extend<Fixtures>({
     productInCart: async ({ page }, use) => {
-        await page.goto(home);
-        await page.locator('a.hrefch', { hasText: productName }).click();
-
-        const dialogPromise = page.waitForEvent('dialog');
-        await page.click('text=Add to cart');
-
-        const dialog = await dialogPromise;
-                await dialog.accept();
-        
-        await use();
-    }
+    await page.goto(`${home}/prod.html?idp_=1`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('text=Add to cart', { timeout: 30000 });
+    page.once('dialog', async dialog => await dialog.accept());
+    await page.click('text=Add to cart');
+    await use();
+}
 });

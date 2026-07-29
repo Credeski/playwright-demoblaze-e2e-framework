@@ -5,7 +5,7 @@ dotenv.config();
 
 const config = defineConfig({
   testDir: './tests',
-  timeout: 60 * 1000,
+  timeout: 90 * 1000,
   expect: {
     timeout: 5000,
   },

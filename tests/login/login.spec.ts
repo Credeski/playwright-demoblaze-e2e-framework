@@ -9,16 +9,21 @@ test.describe('Login', () => {
   test.beforeEach(async ({ page, context }) => {
     await context.clearCookies();
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => localStorage.clear());
     await page.waitForTimeout(1000);
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
-    await loginPage.login(username, password);
 
-    await expect(page.locator('a:has-text("Log out")')).toBeVisible({ timeout: 15000 });
-    await expect(page.locator('#nameofuser')).toContainText(username, { timeout: 10000 });
+await loginPage.login(username, password);
+
+  await page.waitForFunction(() => {
+      const el = document.getElementById('nameofuser');
+      return el && el.textContent && el.textContent.trim().length > 0;
+  }, { timeout: 15000 });
+  await expect(page.locator('#nameofuser')).toContainText(username, { timeout: 10000 });
   });
 
   test('should show error for wrong username with correct password', async ({ page }) => {

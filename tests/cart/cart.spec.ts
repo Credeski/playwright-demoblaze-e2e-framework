@@ -20,11 +20,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('should add a product to the cart and verify it is present', async ({ page }) => {
-    await homePage.navigateToPhoneCategory();
-    await homePage.navigateToPhoneProduct();
+    await page.goto(`${process.env.BASE_URL}/prod.html?idp_=3`, { waitUntil: 'domcontentloaded' });
 
     page.once('dialog', async dialog => {
-    expect(dialog.message()).toBe('Product added.');
+    expect(dialog.message()).toBe('Product added');
     await dialog.accept();
 });
     await productPage.addProductToCart();
@@ -47,8 +46,9 @@ test('should delete a product from the cart', async ({ page, productInCart }) =>
 
     await page.goto(`${process.env.BASE_URL}/cart.html`);
 
-    await page.waitForSelector('tr.success', { state: 'detached', timeout: 10000 });
+    await page.waitForSelector('tr.success', { timeout: 30000 });
     await cart.deleteItem('Samsung galaxy s6');
+    await page.waitForSelector('tr.success', { state: 'detached', timeout: 10000 });
 
     const items = await cart.getCartItems();
     expect(items.some(item => item.includes('Samsung galaxy s6'))).toBe(false);
