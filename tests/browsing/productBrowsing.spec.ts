@@ -9,6 +9,7 @@ test.describe('Product Browsing', () => {
 test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     await homePage.navigateToHomePage();
+    await page.waitForSelector('a.hrefch', { timeout: 10000 });
 });
 
 test('homepage loads with products', async ({ page }) => {
@@ -32,8 +33,11 @@ test('should navigate to monitor category and select a product', async ({ page }
 
 test('should navigate to next and previous pages', async ({ page }) => {
     await homePage.navigateToNextPage();
+    await page.waitForSelector('a.hrefch', { timeout: 10000 });
     await expect(page.locator('a.hrefch', { hasText: 'Nexus 6' })).not.toBeVisible();
+
     await homePage.navigateToPreviousPage();
+    await page.waitForSelector('a.hrefch', { timeout: 10000 });
     await expect(page.locator('a.hrefch', { hasText: 'Nexus 6' })).toBeVisible();
 });
 

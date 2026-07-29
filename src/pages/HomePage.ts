@@ -33,30 +33,37 @@ export class HomePage {
     }
 
     async navigateToPhoneProduct(){
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.phoneProduct.click();
     }
 
     async navigateToLaptopCategory() {
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.laptopCategory.click();
     }   
 
     async navigateToLaptopProduct(){
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.laptopProduct.click();
     }
     
     async navigateToMonitorCategory() {
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.monitorCategory.click();
     }
     
         async navigateToMonitorProduct(){
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.monitorProduct.click();
     }
 
     async navigateToNextPage() {
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.nextButton.click();
     }   
 
     async navigateToPreviousPage() {
+        await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
         await this.previousButton.click();
     }
 
