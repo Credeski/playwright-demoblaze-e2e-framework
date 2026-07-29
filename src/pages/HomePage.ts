@@ -35,8 +35,7 @@ export class HomePage {
 
     async navigateToPhoneProduct(){
         await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
-        await this.phoneProduct.click({ timeout: 30000 });
-        await this.page.waitForLoadState('domcontentloaded');
+        await this.phoneProduct.click();
     }
 
     async navigateToLaptopCategory() {
@@ -46,8 +45,7 @@ export class HomePage {
 
     async navigateToLaptopProduct(){
         await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
-        await this.laptopProduct.click({ timeout: 30000 });
-        await this.page.waitForLoadState('domcontentloaded');
+        await this.laptopProduct.click();
     }
     
     async navigateToMonitorCategory() {
@@ -57,8 +55,7 @@ export class HomePage {
     
         async navigateToMonitorProduct(){
         await this.page.waitForSelector('a.hrefch', { timeout: 10000 });
-        await this.monitorProduct.click({ timeout: 30000 });
-        await this.page.waitForLoadState('domcontentloaded');
+        await this.monitorProduct.click();
     }
 
     async navigateToNextPage() {
