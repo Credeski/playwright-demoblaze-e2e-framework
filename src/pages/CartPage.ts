@@ -23,7 +23,7 @@ export class CartPage {
 }
 
     async deleteItem(itemName: string) {
-        const itemLocator = this.cartItems.filter({ hasText: itemName });
+        const itemLocator = this.cartItems.filter({ hasText: itemName }).first();
         await itemLocator.locator('text=Delete').click();
     }
 

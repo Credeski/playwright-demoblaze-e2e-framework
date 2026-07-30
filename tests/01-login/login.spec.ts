@@ -10,7 +10,13 @@ test.describe('Login', () => {
     await context.clearCookies();
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
     await page.evaluate(() => localStorage.clear());
-    await page.waitForTimeout(1000);
+    await page.evaluate(() => {
+        const modal = document.getElementById('logInModal');
+        if (modal) modal.classList.remove('show');
+        document.body.classList.remove('modal-open');
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) backdrop.remove();
+    });
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {
@@ -19,11 +25,8 @@ test.describe('Login', () => {
 
 await loginPage.login(username, password);
 
-  await page.waitForFunction(() => {
-      const el = document.getElementById('nameofuser');
-      return el && el.textContent && el.textContent.trim().length > 0;
-  }, { timeout: 15000 });
-  await expect(page.locator('#nameofuser')).toContainText(username, { timeout: 10000 });
+  await loginPage.login(username, password);
+  await expect(page.locator('#nameofuser')).toContainText(username, { timeout: 20000 });
   });
 
   test('should show error for wrong username with correct password', async ({ page }) => {

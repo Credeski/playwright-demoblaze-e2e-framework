@@ -6,21 +6,25 @@ import { CartPage } from '../../src/pages/CartPage';
 
 
 test.describe('Add to Cart Functionality', () => {
-    let homePage: HomePage;
-    let productPage: ProductPage;
-    let cartPage: CartPage;
 
-test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    productPage = new ProductPage(page);
-    cartPage = new CartPage(page);
-    await homePage.navigateToHomePage();
-    await page.keyboard.press('Escape');
-    await page.waitForSelector('a.hrefch', { timeout: 10000 })
+    test.beforeEach(async ({ page }) => {
+    await page.goto(`${process.env.BASE_URL}/cart.html`);
+    await page.waitForTimeout(3000);
+    await page.evaluate(() => {
+        const rows = document.querySelectorAll('tr.success');
+        rows.forEach(row => {
+            const deleteLink = row.querySelector('a[onclick^="deleteItem"]');
+            if (deleteLink) (deleteLink as HTMLElement).click();
+        });
+    });
+    await page.waitForTimeout(2000);
 });
 
 test('should add a product to the cart and verify it is present', async ({ page }) => {
+    const productPage = new ProductPage(page);
+    const cartPage = new CartPage(page);
     await page.goto(`${process.env.BASE_URL}/prod.html?idp_=3`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('text=Add to cart', { timeout: 30000 });
 
     page.once('dialog', async dialog => {
     expect(dialog.message()).toBe('Product added');
@@ -47,11 +51,11 @@ test('should delete a product from the cart', async ({ page, productInCart }) =>
     await page.goto(`${process.env.BASE_URL}/cart.html`);
 
     await page.waitForSelector('tr.success', { timeout: 30000 });
-    await cart.deleteItem('Samsung galaxy s6');
+    await cart.deleteItem('Nexus 6');
     await page.waitForSelector('tr.success', { state: 'detached', timeout: 10000 });
 
     const items = await cart.getCartItems();
-    expect(items.some(item => item.includes('Samsung galaxy s6'))).toBe(false);
+    expect(items.some(item => item.includes('Nexus 6'))).toBe(false);
 });
 
 });
