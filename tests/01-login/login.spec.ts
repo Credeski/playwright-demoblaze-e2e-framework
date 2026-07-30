@@ -9,14 +9,13 @@ test.describe('Login', () => {
   test.beforeEach(async ({ page, context }) => {
     await context.clearCookies();
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
-    await page.evaluate(() => localStorage.clear());
     await page.evaluate(() => {
-        const modal = document.getElementById('logInModal');
-        if (modal) modal.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        const backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) backdrop.remove();
+        localStorage.clear();
+        sessionStorage.clear();
     });
+
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(500)
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {

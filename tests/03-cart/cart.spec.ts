@@ -17,14 +17,14 @@ test.describe('Add to Cart Functionality', () => {
             if (deleteLink) (deleteLink as HTMLElement).click();
         });
     });
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
 });
 
 test('should add a product to the cart and verify it is present', async ({ page }) => {
     const productPage = new ProductPage(page);
     const cartPage = new CartPage(page);
     await page.goto(`${process.env.BASE_URL}/prod.html?idp_=3`, { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('text=Add to cart', { timeout: 50000 });
+    await page.waitForSelector('text=Add to cart', { timeout: 30000 });
 
     page.once('dialog', async dialog => {
     await dialog.accept();
