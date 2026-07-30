@@ -15,14 +15,20 @@ test.describe('Login', () => {
     });
 
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.waitForTimeout(500)
+    await page.waitForTimeout(1000)
+
+    // Close any open modal
+    await page.evaluate(() => {
+    const modal = document.getElementById('logInModal');
+    if (modal) modal.classList.remove('show');
+    document.body.classList.remove('modal-open');
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.remove();
+  });
   });
 
   test('should login successfully with valid credentials', async ({ page }) => {
     const loginPage = new LoginPage(page);
-
-
-await loginPage.login(username, password);
 
   await loginPage.login(username, password);
   await expect(page.locator('#nameofuser')).toContainText(username, { timeout: 20000 });
@@ -60,4 +66,5 @@ await loginPage.login(username, password);
 
     await loginPage.login('', '');
   });
+
 });

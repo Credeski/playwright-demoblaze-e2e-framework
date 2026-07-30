@@ -1,7 +1,6 @@
 import { Page } from '@playwright/test';
 import { Locator } from '@playwright/test';
 
-
 export class LoginPage {
     private readonly loginNav: Locator;
     private readonly usernameInput: Locator;
