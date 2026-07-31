@@ -49,9 +49,6 @@ export class CheckoutPage {
         return await this.confirmationTitle.textContent();
     }
 
-    async getConfirmationAmount() {
-        return await this.confirmationAmount.textContent();
-    }
 
     async getConfirmationCardNumber() {
         return await this.confirmationCard.textContent();

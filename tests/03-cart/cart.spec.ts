@@ -48,7 +48,7 @@ test('should delete a product from the cart', async ({ page, productInCart }) =>
 
     await page.waitForSelector('tr.success', { timeout: 30000 });
     await cart.deleteItem('Nexus 6');
-    await page.waitForSelector('tr.success', { state: 'detached', timeout: 10000 });
+    await expect(page.locator('tr.success').filter({ hasText: 'Nexus 6' }).first()).toBeHidden({ timeout: 10000 })
 
     const items = await cart.getCartItems();
     expect(items.some(item => item.includes('Nexus 6'))).toBe(false);

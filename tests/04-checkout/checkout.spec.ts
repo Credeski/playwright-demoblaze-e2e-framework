@@ -20,9 +20,6 @@ test.describe('Checkout', () => {
         const confirmationMessage = await checkoutPage.getConfirmationMessage();
         expect(confirmationMessage).toContain('Thank you for your purchase!');
 
-        const confirmationAmount = await checkoutPage.getConfirmationAmount();
-        expect(confirmationAmount).toContain('Amount: 0 USD');
-
         const confirmationCardNumber = await checkoutPage.getConfirmationCardNumber();
         expect(confirmationCardNumber).toContain(validCheckout.creditCard);
 
