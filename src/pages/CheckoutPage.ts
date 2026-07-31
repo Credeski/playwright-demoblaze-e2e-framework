@@ -46,6 +46,7 @@ export class CheckoutPage {
     }
 
     async getConfirmationMessage() {
+        await this.confirmationModal.waitFor({ state: 'visible', timeout: 15000 });
         return await this.confirmationTitle.textContent();
     }
 

@@ -16,6 +16,7 @@ test.describe('Checkout', () => {
         const checkoutPage = new CheckoutPage(page);
         await checkoutPage.fillOrderForm(validCheckout);
         await checkoutPage.purchase();
+        await page.waitForTimeout(2000);
 
         const confirmationMessage = await checkoutPage.getConfirmationMessage();
         expect(confirmationMessage).toContain('Thank you for your purchase!');

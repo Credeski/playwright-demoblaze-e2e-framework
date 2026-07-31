@@ -17,6 +17,7 @@ export class LoginPage {
     async login(username: string, password: string) {
         await this.loginNav.click();
         await this.page.waitForSelector('#loginusername', { state: 'visible' });
+        await this.page.waitForTimeout(300);
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.waitFor({ state: 'visible' });

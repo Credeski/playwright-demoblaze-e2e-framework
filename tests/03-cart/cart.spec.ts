@@ -9,7 +9,7 @@ test.describe('Add to Cart Functionality', () => {
 
     test.beforeEach(async ({ page }) => {
     await page.goto(`${process.env.BASE_URL}/cart.html`);
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5000);
     await page.evaluate(() => {
         const rows = document.querySelectorAll('tr.success');
         rows.forEach(row => {
@@ -30,10 +30,10 @@ test('should add a product to the cart and verify it is present', async ({ page 
     await dialog.accept();
 });
     await productPage.addProductToCart();
-
+    await page.waitForTimeout(2000);
 
     await page.goto(`${process.env.BASE_URL}/cart.html`);
-    await page.waitForSelector('tr.success', { timeout: 10000 });
+    await page.waitForSelector('tr.success td:has-text("Nexus 6")', { timeout: 15000 });;
     //get the items in the cart and verify that the product is present
     const items = await cartPage.getCartItems();
     expect(items.some(item => item.includes('Nexus 6'))).toBe(true);
@@ -42,7 +42,9 @@ test('should add a product to the cart and verify it is present', async ({ page 
 
 test('should delete a product from the cart', async ({ page, productInCart }) => {
 
+
     const cart = new CartPage(page);
+    await page.waitForTimeout(3000); 
 
     await page.goto(`${process.env.BASE_URL}/cart.html`);
 
