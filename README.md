@@ -7,7 +7,7 @@
 
 A **Playwright + TypeScript** end-to-end test automation framework for [DemoBlaze](https://www.demoblaze.com/), built using the **Page Object Model (POM)**, custom fixtures, reporting, and GitHub Actions CI/CD..
 
-> Built by [Credeski](https://github.com/Credeski) as a portfolio project to demonstrate SDET / QA automation practice: framework design, test strategy, CI integration, and honest reporting of results.
+> Built by [Credeski](https://github.com/Credeski) as a portfolio project to demonstrate SDET / QA automation practice: framework design, test strategy, CI integration, and reporting of results.
 
 ---
 
